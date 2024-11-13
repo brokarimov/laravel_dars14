@@ -43,6 +43,9 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
+                    @if (auth()->user()->hasPermission('users.create'))
+                                <a href="/users/create" class="btn btn-primary">Create</a>
+                            @endif
                     <div class="card mt-2">
 
                         <!-- /.card-header -->
@@ -58,7 +61,7 @@
                                     </div>
                                 </div>
                             </form>
-
+                            
                             <table id="" class="table table-bordered table-striped mt-2">
                                 <thead>
                                     <tr>
@@ -83,12 +86,13 @@
                                                 </button>
 
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="exampleModal{{$model->id}}" tabindex="-1" role="dialog"
-                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal fade" id="exampleModal{{$model->id}}" tabindex="-1"
+                                                    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">{{$model->name}}
+                                                                <h5 class="modal-title" id="exampleModalLabel">
+                                                                    {{$model->name}}
                                                                 </h5>
                                                                 <button type="button" class="close" data-dismiss="modal"
                                                                     aria-label="Close">
@@ -103,7 +107,7 @@
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary"
                                                                     data-dismiss="modal">Close</button>
-                                                                
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -113,8 +117,13 @@
                                             <td>
                                                 <div class="d-flex">
                                                     <form action="/users/{{$model->id}}/edit" method="GET">
-
                                                         <button type="submit" class="btn btn-warning mx-2">Update</button>
+                                                    </form>
+
+                                                    <form action="/users/{{$model->id}}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger">DELETE</button>
                                                     </form>
                                                 </div>
                                             </td>

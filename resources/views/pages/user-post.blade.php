@@ -58,7 +58,7 @@
                                             <td>{{ $model->id }}</td>
                                             <td>{{ $model->title }}</td>
                                             <td class="truncate-cell">{{ $model->description }}</td>
-                                            <td class="truncate-cell" >{{ $model->text }}</td>
+                                            <td class="truncate-cell">{{ $model->text }}</td>
                                             <td><img src="{{$model->image}}" width="100px" alt=""></td>
                                         </tr>
                                     @endforeach

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\MakeUsers;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.create.user-create');
     }
 
     /**
@@ -31,7 +32,14 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name'=>'required|max:255',
+            'email'=>'required|max:255',
+            'password'=>'required|max:255'
+        ]);
+
+        MakeUsers::dispatch($data);
+        return redirect('/users');
     }
 
     /**
@@ -68,8 +76,9 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect('/users')->with('danger', 'Ma\'lumot o\'chirildi!');
     }
 }

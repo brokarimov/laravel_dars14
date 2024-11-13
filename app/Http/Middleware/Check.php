@@ -24,11 +24,16 @@ class Check
                 $role = Auth::user()->roles->first();
                 if (isset($role)) {
                     if ($role->permissions()->where('key', $routename)->exists() && $role->is_active == 1) {
-                        return $next($request);
+                        // dd(auth()->user());
+                        if (auth()->user()->email_verified_at != null) {
+                            return $next($request);
+                        }else{
+                            abort(404);
+                        }
                     } else {
                         abort(403);
                     }
-                }else{
+                } else {
                     abort(404);
                 }
 
